@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-#include <arpa/inet.h>
+#include <netinet/in.h>
 #include "pcap.h"
 
 //ethernet header 구조체
