@@ -14,7 +14,7 @@ struct libnet_ethernet_hdr {
 //ip header 구조체
 struct libnet_ipv4_hdr {
     u_char ihl:4, version:4;        
-            //여기서 ihl을 먼저 써준 이유는 리틀 인디언이기 때문에 ihl을 먼저 읽기 때문이다.
+            //여기서 ihl을 먼저 써준 이유는 :를 써줄 때는 먼저 읽은 놈을 하위 비트에 저장하기 때문이다.
             //:4는 정확히 4비트만 읽으라는 뜻이다.
     u_char  tos;              
     u_short total_len;        
