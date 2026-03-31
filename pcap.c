@@ -14,7 +14,7 @@ struct libnet_ethernet_hdr {
 //ip header 구조체
 struct libnet_ipv4_hdr {
     u_char ihl:4, version:4;        
-            //여기서 ihl을 먼저 써준 이유는 :를 써줄 때는 먼저 읽은 놈을 하위 비트에 저장하기 때문이다.
+            //여기서 ihl을 먼저 써준 이유는 리틀 인디언이기 때문에 ihl을 먼저 읽기 때문이다.
             //:4는 정확히 4비트만 읽으라는 뜻이다.
     u_char  tos;              
     u_short total_len;        
@@ -123,9 +123,10 @@ int main(int argc, char* argv[]){
                eth_hdr->ether_dhost[3], eth_hdr->ether_dhost[4], eth_hdr->ether_dhost[5]);
         
         // src ip와 dst ip를 출력해준다.
-        printf("IP HEADER -> SRC: %s, DST: %s\n\n", inet_ntoa(ip_hdr->src), inet_ntoa(ip_hdr->dst));
-        
+        printf("IP HEADER -> SRC: %d.%d.%d.%d, DST: %d.%d.%d.%d\n\n", ((unsigned char *)&ip_hdr->src)[0], ((unsigned char *)&ip_hdr->src)[1], ((unsigned char *)&ip_hdr->src)[2], ((unsigned char *)&ip_hdr->src)[3], ((unsigned char *)&ip_hdr->dst)[0],((unsigned char *)&ip_hdr->dst)[1],((unsigned char *)&ip_hdr->dst)[2],((unsigned char *)&ip_hdr->dst)[3]);
+
         // src port와 dst port를 출력해준다. 참고로 이때 리틀 엔디안으로 저장됐기에 ntohs를 해준다.
+        u_char *s = (u_char *)&ip_hdr->src;
         printf("TCP HEADER -> SRC PORT: %d, DST PORT: %d\n\n", ntohs(tcp_hdr->sport), ntohs(tcp_hdr->dport));
         
         // data의 크기를 출력해준다.
